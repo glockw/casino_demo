@@ -1,8 +1,8 @@
 import Container from "@material-ui/core/Container";
-import { makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { Copyright } from "./Copyright";
-const useStyles = makeStyles((theme) => ({
+const styles = (theme) => ({
   root: {
     display: "flex",
     flexDirection: "column",
@@ -10,7 +10,15 @@ const useStyles = makeStyles((theme) => ({
   },
   main: {
     marginTop: theme.spacing(8),
+    minWidth: 800,
     marginBottom: theme.spacing(2),
+  },
+  header: {
+    padding: theme.spacing(4, 1),
+    backgroundColor:
+      theme.palette.type === "light"
+        ? theme.palette.grey[200]
+        : theme.palette.grey[800],
   },
   footer: {
     padding: theme.spacing(3, 2),
@@ -20,13 +28,14 @@ const useStyles = makeStyles((theme) => ({
         ? theme.palette.grey[200]
         : theme.palette.grey[800],
   },
-}));
+});
 
-export default function Layout({ children }) {
-  const classes = useStyles();
-
+function Layout({ children, classes }) {
   return (
     <div className={classes.root}>
+      <header className={classes.header}>
+        <Typography variant="body1"> Header</Typography>
+      </header>
       <Container component="main" className={classes.main} maxWidth="sm">
         {children}
       </Container>
@@ -39,3 +48,5 @@ export default function Layout({ children }) {
     </div>
   );
 }
+
+export default withStyles(styles)(Layout);
