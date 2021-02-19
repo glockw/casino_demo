@@ -1,6 +1,8 @@
 import { useReducer, useState } from "react";
 import "./App.css";
+import CustomDialog from "./CustomDialog";
 import Layout from "./Layout";
+import Slots from "./Slots";
 import TableResults from "./TableResults";
 
 const ASC = "asc";
@@ -31,6 +33,9 @@ function App() {
   };
   return (
     <Layout>
+      <CustomDialog title="Casino Royale - Slots" buttonMessage="Play">
+        <Slots />
+      </CustomDialog>
       <TableResults
         results={results}
         sortOrder={order}
