@@ -1,4 +1,6 @@
 import { withStyles } from "@material-ui/core/styles";
+import { useContext } from "react";
+import { CasinoContext } from "./CasinoContext";
 
 const styles = (theme) => ({
   root: {
@@ -23,7 +25,11 @@ const styles = (theme) => ({
   },
 });
 
-function Slots({ classes, results = [0, 0, 0] }) {
+function Slots({ classes }) {
+  const {
+    game: { results },
+  } = useContext(CasinoContext);
+  const win = [...new Set(results)].length === 1;
   return (
     <div className={classes.root}>
       {results.map((q, i) => (

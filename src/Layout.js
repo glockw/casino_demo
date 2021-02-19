@@ -2,7 +2,7 @@ import Container from "@material-ui/core/Container";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { Copyright } from "./Copyright";
-import CustomDialog from "./CustomDialog";
+import Header from "./Header";
 const styles = (theme) => ({
   root: {
     display: "flex",
@@ -31,12 +31,11 @@ const styles = (theme) => ({
   },
 });
 
-function Layout({ children, classes, launch }) {
+function Layout({ children, classes }) {
   return (
     <div className={classes.root}>
-    
       <header className={classes.header}>
-        <Typography variant="body1"> Header</Typography>
+          <Header/>
       </header>
       <Container component="main" className={classes.main} maxWidth="sm">
         {children}

@@ -7,7 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
-import React from "react";
+import { useState } from "react";
 
 const styles = (theme) => ({
   root: {
@@ -56,7 +56,6 @@ const DialogActions = withStyles((theme) => ({
 export default function CustomDialog({
   title = " Modal title",
   buttonMessage = "Open Dialog",
-  onClose = (f) => f,
   closeAction = (fun) => (
     <Button autoFocus onClick={fun} color="primary">
       Save changes
@@ -64,7 +63,7 @@ export default function CustomDialog({
   ),
   children,
 }) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -79,7 +78,7 @@ export default function CustomDialog({
         {buttonMessage}
       </Button>
       <Dialog
-        onClose={onClose}
+        onClose={handleClose}
         maxWidth="md"
         aria-labelledby="customized-dialog-title"
         open={open}

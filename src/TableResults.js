@@ -5,7 +5,8 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
-import React, { useMemo } from "react";
+import React, { useContext, useMemo } from "react";
+import { CasinoContext } from "./CasinoContext";
 
 const styles = (theme) => ({
   root: {
@@ -18,14 +19,12 @@ const styles = (theme) => ({
   },
 });
 
-function TableResults({
-  results = [],
-  classes,
-  sorted = "",
-  sortOrder = "asc",
-  sortBy = (f) => f,
-}) {
-  const rows = useMemo(() => results);
+function TableResults({ classes }) {
+  const {
+    sort: { sorted, sortBy, order },
+    history,
+  } = useContext(CasinoContext);
+  const rows = useMemo(() => history.data);
   return (
     <Paper className={classes.root}>
       <Table className={classes.table}>
@@ -34,7 +33,7 @@ function TableResults({
             <TableCell>
               <TableSortLabel
                 active={"id" == sorted}
-                direction={sortOrder}
+                direction={order}
                 onClick={() => sortBy("id")}
               >
                 Id
@@ -44,7 +43,7 @@ function TableResults({
             <TableCell align="right">
               <TableSortLabel
                 active={"time" == sorted}
-                direction={sortOrder}
+                direction={order}
                 onClick={() => sortBy("time")}
               >
                 Time
@@ -56,7 +55,7 @@ function TableResults({
           {rows.map((row) => (
             <TableRow key={row.id}>
               <TableCell align="right">{row.id}</TableCell>
-              <TableCell align="right">{row.result}</TableCell>
+              <TableCell align="right">{row.slot}</TableCell>
               <TableCell align="right">{row.time}</TableCell>
             </TableRow>
           ))}
