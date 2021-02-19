@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import CasinoContextProvider from "./CasinoContext";
+import CustomActions from "./CustomActions";
+import CustomDialog from "./CustomDialog";
+import { useValues } from "./hooks/useValues";
+import Layout from "./Layout";
+import { currencyFormat } from "./Service";
+import Slots from "./Slots";
+import TableResults from "./TableResults";
 
 function App() {
+  const value = useValues();
+  const onClose = (close) => <CustomActions close={close} />;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <CasinoContextProvider value={value}>
+      <Layout>
+        <CustomDialog
+          closeAction={onClose}
+          title={`Casino Royale - Slots | Funds: ${currencyFormat(
+            value.user.balance
+          )}`}
+          buttonMessage="Play"
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Slots />
+        </CustomDialog>
+        <TableResults />
+      </Layout>
+    </CasinoContextProvider>
   );
 }
 
