@@ -1,4 +1,5 @@
 import { useReducer, useState } from "react";
+import * as service from "../Service";
 import { useHistory } from "./useHistory";
 import { useRoll } from "./useRoll";
 
@@ -10,7 +11,7 @@ export function useValues() {
   const [results, roll, test] = useRoll();
   const [balance, setBalance] = useState(99);
 
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(service.getUser().user);
   const [order, setOrder] = useReducer(
     (order) => (order == ASC ? DESC : ASC),
     DESC
@@ -35,6 +36,8 @@ export function useValues() {
       setBalance((balance) => balance - 0.5);
     }
 
+    service.setUser({ user, balance });
+
     addRoll(roll.join("-"));
   };
   const compareBy = (col) => (a, b) => {
@@ -55,7 +58,13 @@ export function useValues() {
       name: user,
       isLogged: user != null,
       balance,
-      setName: setUser,
+      setName: (name) => {
+        setUser(name);
+        service.setUser({
+          user: name,
+          balance,
+        });
+      },
     },
     history: {
       data: history,

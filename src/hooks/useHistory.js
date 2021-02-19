@@ -8,7 +8,6 @@ export function useHistory(initial) {
     if (!history.length) {
       id = 0;
     }
-    debugger;
     const roll = {
       id: id + 1,
       slot: val,
